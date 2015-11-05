@@ -47,7 +47,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'entityName',
         message: 'Please enter the name of your entity',
-        default: 'tux-element'
+        default: ELEMENT_PREFIX + '-element'
       });
 
       this.prompt(prompts, function(props) {
