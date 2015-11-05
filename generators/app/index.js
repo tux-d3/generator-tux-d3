@@ -37,6 +37,13 @@ module.exports = yeoman.generators.Base.extend({
       var done = this.async();
 
       prompts.push({
+         type: 'input',
+         name: 'author',
+         message: 'Hi, who are you (use First-Name Last-Name <email@somewhere.com> (url://somepage/))?',
+         default: 'Ahmed Masud <ahmed.masud@trustifier.com> (https://trustifier.com/)'
+      });
+
+      prompts.push({
         type: 'input',
         name: 'entityName',
         message: 'Please enter the name of your entity',
@@ -139,7 +146,8 @@ module.exports = yeoman.generators.Base.extend({
     this.props.behaviorNameCapital = _.capitalize(_.camelCase(this.props.behaviorName));
     //  x-foo/x-foo.html
 
-    this.props.pathToEntity = path.join(this.props.basePath , this.props.entityName, this.props.entityName);
+    this.props.pathToEntityDir = path.join(this.props.basePath, this.props.entityName);
+    this.props.pathToEntity = path.join(this.props.pathToEntityDir, this.props.entityName);
     this.props.pathToBower = path.relative(
       path.dirname(this.props.pathToEntity),
       path.join(process.cwd(), this.props.basePath, '../bower_components')
@@ -166,6 +174,10 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('._behaviorName.html'),
       this.destinationPath(this.props.pathToEntity+ "-behavior.html"), this.props, { delimiter: '\?'});
     }
+    this.fs.copyTpl(this.templatePath('_bower.json'),
+        this.destinationPath(this.props.pathToEntityDir,'bower.json'), this.props, { delimiter: '\?' });
+    this.fs.copyTpl(this.templatePath('_LICENSE'),
+        this.destinationPath(this.props.pathToEntityDir,'LICENSE'), this.props, { delimiter: '\?' });
     // TODO: insert demo template stuff
   },
 

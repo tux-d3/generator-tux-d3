@@ -1,5 +1,6 @@
 {
   "name": "<?= entityName ?>",
+  "version": "<?= version ?>",
   "homepage": "https://github.com/tux-d3/<?= entityName ?>",
   "authors": [
     "Ahmed Masud <ahmed.masud@trustifier.com>"
