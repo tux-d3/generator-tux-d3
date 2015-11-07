@@ -65,7 +65,7 @@ module.exports = yeoman.generators.Base.extend({
             name:'entityType',
             message:'Please select the type of entity you\'re generating',
             choices: [ 'element', 'behavior' ],
-            default: 'element'
+            default: (this.props.entityName.indexOf('-behavior') > 0) ? 'behavior' : 'element'
       });
 
       this.prompt(prompts, function(props) {
@@ -133,10 +133,10 @@ module.exports = yeoman.generators.Base.extend({
     this.log('configuring...');
     if(this.props.entityType === "behavior" || this.props.generateElementBehavior) {
       this.props.behaviorName = this.props.entityName;
-      if(this.props.behaviorName.substr(0, 3).toLowerCase() === ELEMENT_PREFIX) {
-        this.props.behaviorName = this.props.behaviorName.substr(4);
+      if(this.props.behaviorName.substr(0, ELEMENT_PREFIX.length).toLowerCase() === ELEMENT_PREFIX) {
+        this.props.behaviorName = this.props.behaviorName.substr(ELEMENT_PREFIX.length);
       }
-      if(this.props.behaviorName.indexOf('-behavior') <= 0) {
+      if(this.props.behaviorName.indexOf('-behavior') < 0) {
         this.props.behaviorName = this.props.behaviorName+ '-behavior';
       }
     }
